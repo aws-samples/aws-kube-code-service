@@ -1,0 +1,19 @@
+Metadata-Version: 2.0
+Name: zip
+Version: 0.0.1
+Summary: UNKNOWN
+Home-page: https://github.com/kdheepak/zip
+Author: Dheepak Krishnamurthy
+Author-email: kdheepak89@gmail.com
+License: Revised BSD License
+Platform: UNKNOWN
+Requires-Dist: click (>=6.3)
+Requires-Dist: colorama (>=0.3.7)
+Requires-Dist: networkx (>=1.11)
+Requires-Dist: six (>=1.10.0)
+
+# zip
+
+
+
+

@@ -1,0 +1,89 @@
+Description: This template deploys a CI/CD pipeline to deploy to a kubernetes cluster
+
+Parameters:
+
+  CA:
+    Type: String
+    NoEcho: true
+
+  ClientCert:
+    Type: String
+    NoEcho: true
+
+  ClientKey:
+    Type: String
+    NoEcho: true
+
+Resources:
+
+  ImportCode:
+    Properties:
+      ServiceToken: !GetAtt InjectSSM.Arn
+      CA: !Ref CA
+      ClientCert: !Ref ClientCert
+      ClientKey: !Ref ClientKey
+    Type: "Custom::SSMParameters"
+
+  SSMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /assume/
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        -
+          PolicyName: AdminForNow
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              -
+                Sid: AllowEverything
+                Effect: Allow
+                Action:
+                  - "*"
+                Resource: "*"
+
+  InjectSSM:
+    Properties:
+      Description: Inject SSM Secure Strings
+      Handler: index.handler
+      Runtime: python3.6
+      Role: !GetAtt SSMRole.Arn
+      Timeout: 120
+      Code:
+        ZipFile: |
+          import os
+          import json
+          import boto3
+          import cfnresponse
+          from botocore.exceptions import ClientError
+          client = boto3.client('ssm')
+          import logging
+          logger = logging.getLogger()
+          logger.setLevel(logging.INFO)
+          def handler(event, context):
+            logger.info("Received event")
+            try:
+              response = client.put_parameter(Name='CA', Description="CA for k8s cluster", Value=event['ResourceProperties']['CA'], Type="SecureString",
+                                    Overwrite=True)
+
+              response = client.put_parameter(Name='ClientCert', Description="Client Certificate", Value=event['ResourceProperties']['ClientCert'], Type="SecureString",
+                                              Overwrite=True)
+
+              response = client.put_parameter(Name='ClientKey', Description="Client Key", Value=event['ResourceProperties']['ClientKey'], Type="SecureString",
+                                              Overwrite=True)
+              result = cfnresponse.SUCCESS
+            except ClientError as e:
+              logger.error('Error: %s', e)
+              result = cfnresponse.SUCCESS
+
+            logger.info("Completed event")
+            cfnresponse.send(event, context, result, {})
+
+    Type: AWS::Lambda::Function

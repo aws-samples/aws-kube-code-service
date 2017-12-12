@@ -1,0 +1,96 @@
+:icons:
+:linkcss:
+:imagesdir: ./images
+
+= CodeSuite - Continuous Deployment Reference Architecture for Kubernetes
+
+The CodeSuite Continuous Deployment reference architecture demonstrates how to achieve continuous
+deployment of an application to a Kubernetes cluster using AWS CodePipeline, AWS CodeCommit, AWS CodeBuild and AWS Lambda.
+
+Launching this AWS CloudFormation stack provisions a continuous deployment process that uses AWS CodePipeline
+to monitor an AWS CodeCommit repository for new commits, AWS CodeBuild to create a new Docker container image and to push
+it into Amazon ECR. Finally an AWS Lambda function with the Kubernetes Python SDK updates a Kubernetes deployment in a live cluster.
+
+When you deploy the cloudformation stack there will be four parameters that are specific to your Kubernetes cluster. You will need the API endpoint, Certificate Authority Data, Client Certificate Data and Client Key Data.
+The last of these three are sensitive, the cloudformation parameter is marked with the "NoEcho" property set to true so that the contents are not exposed through cloudformation. In addition those strings are encrypted with the account default
+KMS key and stored in parameter store. The Lambda function that authenticates to your Kubernetes API endpoint is assigned an IAM role that has permission to access those keys. The Lambda function builds a config file in the tmpfs directory of the Lambda which is in memory
+so that when the Lambda function terminates the secrets are gone.
+
+image::architecture.png[Architecture]
+
+=== Pre-Requisites
+
+A fucntioning Kubernetes cluster and config file to authenticate to the cluster, by default this is located at `~/.kube/config`
+
+Clone this repository
+
+    git clone https://github.com/omarlari/aws-kube-codesuite.git
+
+This creates a directory named `aws-kube-codesuite` in your current directory, which contains the code we need for this tutorial. Change to this directory.
+
+=== Application - initial deployment and service Provisioning
+
+    kubectl apply -f ./kube-manifests/deploy-first.yml
+
+=== Deploy the CloudFormation stack
+
+Note, deploy this stack in the same region as your k8s cluster. Your cluster nodes will require access via an IAM profile to download images from ECR. If you deployed this cluster through KOPS this will be already take care of for you.
+
+|===
+
+|Region | Launch Template
+| *N. Virginia* (us-east-1)
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+
+| *Ohio* (us-east-2)
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+
+| *Oregon* (us-west-2)
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+
+| *Ireland* (eu-west-1)
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+
+| *Frankfurt* (eu-central-1)
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+
+| *Singapore* (ap-southeast-1)
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+
+| *Sydney* (ap-southeast-2)
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+
+| *Tokyo* (ap-northeast-1)
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+
+|===
+
+=== Test CI/CD platform
+
+Install credential helper
+
+    git config --global credential.helper '!aws codecommit credential-helper $@'
+    git config --global credential.UseHttpPath true
+
+Clone CodeCommit Repository (url will be in CloudFormation Output), change directories up one level `cd ..` so that both repositories are at the same directory structure.
+Check the outputs page for your CloudFormation stack:
+
+    git clone <name_of_your_codecommit_repository>
+
+This creates a directory named `codesuite-demo` in your current directory.
+
+Copy contents from aws-kube-codesuite/sample-app to this repository folder.
+
+    cp aws-kube-codesuite/* codesuite-demo/
+
+Make a change to the `codesuite-demo/hello.py` file and then change into that directory `cd codesuite-demo`
+
+Add, commit and push:
+
+    git add . && git commit -m "test CodeSuite" && git push origin master
+
+== Conclusion
+
+== License Summary
+
+This sample code is made available under a modified MIT license. See the LICENSE file.

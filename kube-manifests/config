@@ -1,0 +1,19 @@
+apiVersion: v1
+clusters: 
+- cluster:
+    certificate-authority-data: $CA
+    server: https://api.$ENDPOINT
+  name: $ENDPOINT
+contexts:
+- context:
+    cluster: $ENDPOINT
+    user: $ENDPOINT
+  name: $ENDPOINT
+current-context: $ENDPOINT
+kind: Config
+preferences: {}
+users:
+- name: $ENDPOINT
+  user:
+    client-certificate-data: $CLIENT_CERT
+    client-key-data: $CLIENT_KEY

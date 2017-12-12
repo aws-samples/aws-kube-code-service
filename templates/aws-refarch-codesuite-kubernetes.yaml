@@ -1,0 +1,92 @@
+Description: >
+  This template illustrates how to use AWS CodeBuild and AWS CodePipeline to
+  achieve continuous deployment of source code from a CodeCommit repository via a
+  Docker container to a Kubernetes cluster.
+Parameters:
+
+  Name:
+    Type: String
+    Default: codesuite-demo
+
+  TemplateBucket:
+    Type: String
+    Default: codesuite-demo-public
+
+  BranchName:
+    Type: String
+    Default: master
+
+  DeploymentName:
+    Type: String
+    Default: codesuite-demo
+
+  CA:
+    Type: String
+    NoEcho: true
+
+  ClientCert:
+    Type: String
+    NoEcho: true
+
+  ClientKey:
+    Type: String
+    NoEcho: true
+
+  ClusterEndpoint:
+    Type: String
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterLabels:
+      ClusterEndpoint:
+        default: The API Endpoint for your Kubernetes ClusterEndpoint
+      CA:
+        default: Certificate Authority Data
+      ClientCert:
+        default: Client Certificate Data
+      ClientKey:
+        default: Client Key Data
+    ParameterGroups:
+      - Label:
+          default: Kubernetes Cluster Details
+        Parameters:
+          - ClusterEndpoint
+          - CA
+          - ClientCert
+          - ClientKey
+      - Label:
+          default: Advanced
+        Parameters:
+          - TemplateBucket
+          - BranchName
+          - DeploymentName
+
+Resources:
+
+  LambdaCopy:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/codesuite-demo-public/lambda-copy.yaml
+      Parameters:
+        TemplateBucket: !Ref TemplateBucket
+
+  SSMInject:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/codesuite-demo-public/ssm-inject.yaml
+      Parameters:
+        CA: !Ref CA
+        ClientCert: !Ref ClientCert
+        ClientKey: !Ref ClientKey
+
+  Pipeline:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/codesuite-demo-public/deployment-pipeline.yaml
+      Parameters:
+            Name: !Ref AWS::StackName
+            TemplateBucket: !Ref TemplateBucket
+            BranchName: !Ref BranchName
+            DeploymentName: !Ref DeploymentName
+            ClusterEndpoint: !Ref ClusterEndpoint
+            LocalBucket: !GetAtt LambdaCopy.Outputs.S3Bucket
