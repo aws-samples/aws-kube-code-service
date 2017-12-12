@@ -32,6 +32,12 @@ This creates a directory named `aws-kube-codesuite` in your current directory, w
 
     kubectl apply -f ./kube-manifests/deploy-first.yml
 
+Find the service endpoint to view the application:
+
+    kubectl get svc codesuite-demo -o wide
+
+If you copy and paste the External IP from the codesuite-demo service into a browser you should see the nginx homepage.
+
 === Deploy the CloudFormation stack
 
 Note, deploy this stack in the same region as your k8s cluster. Your cluster nodes will require access via an IAM profile to download images from ECR. If you deployed this cluster through KOPS this will be already take care of for you.
@@ -88,6 +94,20 @@ Make a change to the `codesuite-demo/hello.py` file and then change into that di
 Add, commit and push:
 
     git add . && git commit -m "test CodeSuite" && git push origin master
+
+To view the pipeline in the AWS console go to the outputs tab for the pipeline cloudformation template and click on the Pipeline URL link:
+
+image::pipeline-url.png[pipeline-url]
+
+You can then see the pipeline move through the various stages:
+
+image::pipeline.png[pipeline]
+
+Once the final Lambda stage is complete you should be able to see the new deployment exposed through the same service load balancer.
+
+    kubectl get svc codesuite-demo -o wide
+
+Now if you copy and paste the External IP from the codesuite-demo service into a browser you should see the flask page reflecting the changes you applied.
 
 == Conclusion
 
