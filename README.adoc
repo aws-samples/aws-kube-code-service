@@ -112,6 +112,7 @@ Now if you copy and paste the External IP from the codesuite-demo service into a
 === Cleaning up the example resources
 
 To remove all resources created by this example do the following:
+
 1. Delete the main CloudFormation stack which deletes the substacks and resources.
 2. Manually delete resources which may contain files:
 * S3 bucket: ArtifactBucket
