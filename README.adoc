@@ -123,7 +123,7 @@ To remove all resources created by this example do the following:
 
 The following section explain all of the resources created the CloudFormation template provided with this example.
 
-link:./templates/ssm-inject.yaml
+link:./templates/ssm-inject.yaml[SSM Inject]
 
 Deploys a custome resource via Lambda which creates secure string key value pairs for all of the secrets required to authenticate to the Kubernetes cluster.
 
