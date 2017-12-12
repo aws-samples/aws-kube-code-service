@@ -24,7 +24,7 @@ A fucntioning Kubernetes cluster and config file to authenticate to the cluster,
 
 Clone this repository
 
-    git clone https://github.com/omarlari/aws-kube-codesuite.git
+    git clone https://github.com/aws-samples/aws-kube-codesuite
 
 This creates a directory named `aws-kube-codesuite` in your current directory, which contains the code we need for this tutorial. Change to this directory.
 
@@ -108,6 +108,24 @@ Once the final Lambda stage is complete you should be able to see the new deploy
     kubectl get svc codesuite-demo -o wide
 
 Now if you copy and paste the External IP from the codesuite-demo service into a browser you should see the flask page reflecting the changes you applied.
+
+=== Cleaning up the example resources
+
+To remove all resources created by this example do the following:
+1. Delete the main CloudFormation stack which deletes the substacks and resources.
+2. Manually delete resources which may contain files:
+* S3 bucket: ArtifactBucket
+* S3 bucket: LambdaCopy bucket
+* ECR repository: Repository
+3. Delete the Kubernetes deployment and service
+
+== CloudFormation template resources
+
+The following section explain all of the resources created the CloudFormation template provided with this example.
+
+link:./templates/ssm-inject.yaml
+
+Deploys a custome resource via Lambda which creates secure string key value pairs for all of the secrets required to authenticate to the Kubernetes cluster.
 
 == Conclusion
 
