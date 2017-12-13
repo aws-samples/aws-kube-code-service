@@ -20,7 +20,7 @@ image::architecture.png[Architecture]
 
 === Pre-Requisites
 
-A fucntioning Kubernetes cluster and config file to authenticate to the cluster, by default this is located at `~/.kube/config`
+A functioning Kubernetes cluster and config file to authenticate to the cluster, by default this is located at `~/.kube/config`
 
 Clone this repository
 
@@ -122,7 +122,7 @@ To remove all resources created by this example do the following:
 
 == CloudFormation template resources
 
-The following section explain all of the resources created the CloudFormation template provided with this example.
+The following section explains all of the resources created the CloudFormation template provided with this example.
 
 link:/templates/lambda-copy.yaml[lambda-copy]
 
