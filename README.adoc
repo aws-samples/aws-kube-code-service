@@ -11,7 +11,7 @@ Launching this AWS CloudFormation stack provisions a continuous deployment proce
 to monitor an AWS CodeCommit repository for new commits, AWS CodeBuild to create a new Docker container image and to push
 it into Amazon ECR. Finally an AWS Lambda function with the Kubernetes Python SDK updates a Kubernetes deployment in a live cluster.
 
-When you deploy the cloudformation stack there will be four parameters that are specific to your Kubernetes cluster. You will need the API endpoint, Certificate Authority Data, Client Certificate Data and Client Key Data.
+When you deploy the cloudformation stack there will be four parameters that are specific to your Kubernetes cluster. You will need the API endpoint (enter only the subdomain and omit 'api'), Certificate Authority Data, Client Certificate Data and Client Key Data.
 The last of these three are sensitive, the cloudformation parameter is marked with the "NoEcho" property set to true so that the contents are not exposed through cloudformation. In addition those strings are encrypted with the account default
 KMS key and stored in parameter store. The Lambda function that authenticates to your Kubernetes API endpoint is assigned an IAM role that has permission to access those keys. The Lambda function builds a config file in the tmpfs directory of the Lambda which is in memory
 so that when the Lambda function terminates the secrets are gone.

@@ -82,7 +82,7 @@ Resources:
   Pipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/codesuite-demo-public/deployment-pipeline.yaml
+      TemplateURL: https://s3.amazonaws.com/codesuite-demo-public/dev/deployment-pipeline.yaml
       Parameters:
             Name: !Ref AWS::StackName
             TemplateBucket: !Ref TemplateBucket
