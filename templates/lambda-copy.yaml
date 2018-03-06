@@ -33,7 +33,6 @@ Resources:
   S3CopyRole:
     Type: AWS::IAM::Role
     Properties:
-
       Path: /assume/
       AssumeRolePolicyDocument:
         Version: 2012-10-17
@@ -61,7 +60,7 @@ Resources:
                 Sid: SourceBucketReadAccess
                 Effect: Allow
                 Action:
-                  - "s3:ListBucket"
+                  - "s3:List*"
                   - "s3:GetObject"
                 Resource:
                   - !Sub "arn:aws:s3:::${TemplateBucket}"
@@ -70,7 +69,7 @@ Resources:
                 Sid: DestBucketWriteAccess
                 Effect: Allow
                 Action:
-                  - "s3:ListBucket"
+                  - "s3:List*"
                   - "s3:GetObject"
                   - "s3:PutObject"
                   - "s3:PutObjectAcl"
