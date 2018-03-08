@@ -1,8 +1,8 @@
 apiVersion: v1
-clusters: 
+clusters:
 - cluster:
     certificate-authority-data: $CA
-    server: https://api.$ENDPOINT
+    server: $ENDPOINT
   name: $ENDPOINT
 contexts:
 - context:
