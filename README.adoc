@@ -89,7 +89,7 @@ Copy contents from aws-kube-codesuite/sample-app to this repository folder.
 
     cp -r aws-kube-codesuite/* codesuite-demo/
 
-Make a change to the `codesuite-demo/hello.py` file and then change into that directory `cd codesuite-demo`
+Make a change to the `codesuite-demo/sample-app/hello.py` file and then change into that directory `cd codesuite-demo`
 
 Add, commit and push:
 
