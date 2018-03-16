@@ -87,7 +87,7 @@ This creates a directory named `codesuite-demo` in your current directory.
 
 Copy contents from aws-kube-codesuite/sample-app to this repository folder.
 
-    cp aws-kube-codesuite/* codesuite-demo/
+    cp -r aws-kube-codesuite/* codesuite-demo/
 
 Make a change to the `codesuite-demo/hello.py` file and then change into that directory `cd codesuite-demo`
 
