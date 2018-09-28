@@ -1,0 +1,62 @@
+Description: >
+  This template illustrates how to use AWS CodeBuild and AWS CodePipeline to
+  achieve continuous deployment of source code from a CodeCommit repository via a
+  Docker container to a Kubernetes cluster.
+Parameters:
+
+  Name:
+    Type: String
+    Default: codesuite-demo
+
+  TemplateBucket:
+    Type: String
+    Default: aws-eks-codesuite
+
+  BranchName:
+    Type: String
+    Default: master
+
+  DeploymentName:
+    Type: String
+    Default: codesuite-demo
+
+  ClusterName:
+    Type: String
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterLabels:
+      ClusterName:
+        default: The name of your EKS cluster
+    ParameterGroups:
+      - Label:
+          default: Kubernetes Cluster Details
+        Parameters:
+          - ClusterName
+      - Label:
+          default: Advanced
+        Parameters:
+          - TemplateBucket
+          - BranchName
+          - DeploymentName
+
+Resources:
+
+  LambdaCopy:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/aws-eks-codesuite/lambda-copy.yaml
+      Parameters:
+        TemplateBucket: !Ref TemplateBucket
+
+  Pipeline:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/aws-eks-codesuite/deployment-pipeline.yaml
+      Parameters:
+            Name: !Ref AWS::StackName
+            TemplateBucket: !Ref TemplateBucket
+            BranchName: !Ref BranchName
+            DeploymentName: !Ref DeploymentName
+            ClusterName: !Ref ClusterName
+            LocalBucket: !GetAtt LambdaCopy.Outputs.S3Bucket
