@@ -129,7 +129,7 @@ Resources:
               print 'copy {} to {}'.format(key, dest_key)
               if not key.endswith('/'):
                 print 'copy {} to {}'.format(key, dest_key)
-                client.copy_object(CopySource={'Bucket': source_bucket, 'Key': key}, Bucket=bucket, Key = dest_key)
+                client.copy_object(CopySource={'Bucket': source_bucket, 'Key': key}, Bucket=bucket, Key = 'codepipeline.zip')
             return cfnresponse.SUCCESS
 
           def delete_objects(bucket, prefix):
