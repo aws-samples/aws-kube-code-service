@@ -79,6 +79,35 @@ a|
 
 |===
 
+If you are deploying this architecture to an Amazon EKS cluster, you would need to give the Lambda
+execution role permissions in Amazon EKS cluster. You can get the ARN of your Lambda execution role
+from the Outputs tab in the CloudFormation template. Refer to this 
+link:https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html[User Guide] for detailed
+instructions.
+
+1. Edit the `aws-auth` ConfigMap of your cluster.
+
+    kubectl -n kube-system edit configmap/aws-auth
+
+2. Add your Lambda execution role to the config
+
+    # Please edit the object below. Lines beginning with a '#' will be ignored,
+    # and an empty file will abort the edit. If an error occurs while saving this file will be
+    # reopened with the relevant failures.
+    #
+    apiVersion: v1
+    data:
+      mapRoles: |
+        - rolearn: arn:aws:iam::<AWS Account ID>:role/devel-worker-nodes-NodeInstanceRole-74RF4UBDUKL6
+          username: system:node:{{EC2PrivateDNSName}}
+          groups:
+            - system:bootstrappers
+            - system:nodes
+        - rolearn: arn:aws:iam::<AWS Account ID>:role/<your lambda execution role>
+          username: admin
+          groups:
+            - system:masters
+
 === Test CI/CD platform
 
 Install credential helper
