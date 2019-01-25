@@ -8,12 +8,12 @@ Parameters:
 
   TemplateBucket:
     Type: String
-    Default: aws-eks-codesuite
+    Default: codesuite-demo-public
     Description: S3 bucket containing the code deployed by this template
 
   CodeKey:
     Type: String
-    Default: codepipeline.zip
+    Default: "eks/"
     Description: Key prefix for resources referenced from the TemplateBucket
 
 Resources:
@@ -66,6 +66,7 @@ Resources:
                 Resource:
                   - !Sub "arn:aws:s3:::${TemplateBucket}"
                   - !Sub "arn:aws:s3:::${TemplateBucket}/${CodeKey}"
+                  - !Sub "arn:aws:s3:::${TemplateBucket}/*"
               -
                 Sid: DestBucketWriteAccess
                 Effect: Allow
