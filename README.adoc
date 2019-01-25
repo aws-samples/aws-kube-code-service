@@ -24,17 +24,17 @@ A functioning Kubernetes cluster and config file to authenticate to the cluster,
 
 Clone this repository
 
-    git clone https://github.com/aws-samples/aws-kube-codesuite
+git clone https://github.com/aws-samples/aws-kube-codesuite
 
 This creates a directory named `aws-kube-codesuite` in your current directory, which contains the code we need for this tutorial. Change to this directory.
 
 === Application - initial deployment and service Provisioning
 
-    kubectl apply -f ./kube-manifests/deploy-first.yml
+kubectl apply -f ./kube-manifests/deploy-first.yml
 
 Find the service endpoint to view the application:
 
-    kubectl get svc codesuite-demo -o wide
+kubectl get svc codesuite-demo -o wide
 
 If you copy and paste the External IP from the codesuite-demo service into a browser you should see the nginx homepage.
 
@@ -44,22 +44,22 @@ Note, deploy this stack in the same region as your k8s cluster. Your cluster nod
 
 |===
 
-|Region | Launch Template for Kubernetes | Launch Template for Amazon EKS
+    |Region | Launch Template for Kubernetes | Launch Template for Amazon EKS
 | *N. Virginia* (us-east-1)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-codesuite/aws-refarch-codesuite-kubernetes.yaml]
+    a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+    a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/eks/aws-refarch-codesuite-kubernetes.yaml]
 
 | *Ohio* (us-east-2)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
-a|
+    a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+    a|
 
 | *Oregon* (us-west-2)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-codesuite/aws-refarch-codesuite-kubernetes.yaml]
+    a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+    a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/eks/aws-refarch-codesuite-kubernetes.yaml]
 
 | *Ireland* (eu-west-1)
 a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-codesuite/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/eks/aws-refarch-codesuite-kubernetes.yaml]
 
 | *Frankfurt* (eu-central-1)
 a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]

@@ -8,7 +8,7 @@ Parameters:
 
   TemplateBucket:
     Type: String
-    Default: aws-eks-codesuite
+    Default: codesuite-demo-public
 
   BranchName:
     Type: String
@@ -276,7 +276,7 @@ Resources:
           - Name: REPOSITORY_URI
             Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${Repository}
           - Name: TEMPLATE_BUCKET
-            Value: !Ref TemplateBucket
+            Value: !Ref LocalBucket
           - Name: DEPLOYMENT_NAME
             Value: !Ref DeploymentName
           - Name: CLUSTER_NAME
