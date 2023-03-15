@@ -8,7 +8,7 @@ Parameters:
 
   TemplateBucket:
     Type: String
-    Default: aws-eks-codesuite
+    Default: aws-eks-code-service
     Description: S3 bucket containing the code deployed by this template
 
   CodeKey:
