@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
 kind: Deployment
 metadata:
-  name: codesuite-demo
+  name: code-service-demo
 spec:
   selector:
     matchLabels:

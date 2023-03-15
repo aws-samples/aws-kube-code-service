@@ -4,11 +4,11 @@ Parameters:
 
   Name:
     Type: String
-    Default: codesuite-demo
+    Default: code-service-demo
 
   TemplateBucket:
     Type: String
-    Default: codesuite-demo-public
+    Default: code-service-demo-public
 
   BranchName:
     Type: String
@@ -16,7 +16,7 @@ Parameters:
 
   DeploymentName:
     Type: String
-    Default: codesuite-demo
+    Default: code-service-demo
 
   ClusterEndpoint:
     Type: String

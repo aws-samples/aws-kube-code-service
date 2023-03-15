@@ -68,6 +68,6 @@ Once these are configured, you can test your function. Good luck!
 This reference architecture can be deployed using the AWS CloudFormation template below.
 
 [<img
-src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png">](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-codesuite/aws-refarch-codesuite-kubernetes.yaml)
+src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png">](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-code-service/aws-refarch-code-service-kubernetes.yaml)
 
 

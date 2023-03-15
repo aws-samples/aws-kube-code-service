@@ -2,9 +2,9 @@
 :linkcss:
 :imagesdir: ./images
 
-= CodeSuite - Continuous Deployment Reference Architecture for Kubernetes
+= Code Service - Continuous Deployment Reference Architecture for Kubernetes
 
-The CodeSuite Continuous Deployment reference architecture demonstrates how to achieve continuous
+The Code Service Continuous Deployment reference architecture demonstrates how to achieve continuous
 deployment of an application to a Kubernetes cluster using AWS CodePipeline, AWS CodeCommit, AWS CodeBuild and AWS Lambda.
 
 Launching this AWS CloudFormation stack provisions a continuous deployment process that uses AWS CodePipeline
@@ -24,9 +24,9 @@ A functioning Kubernetes cluster and config file to authenticate to the cluster,
 
 Clone this repository
 
-    git clone https://github.com/aws-samples/aws-kube-codesuite
+    git clone https://github.com/aws-samples/aws-kube-code-service
 
-This creates a directory named `aws-kube-codesuite` in your current directory, which contains the code we need for this tutorial. Change to this directory.
+This creates a directory named `aws-kube-code-service` in your current directory, which contains the code we need for this tutorial. Change to this directory.
 
 === Application - initial deployment and service Provisioning
 
@@ -34,9 +34,9 @@ This creates a directory named `aws-kube-codesuite` in your current directory, w
 
 Find the service endpoint to view the application:
 
-    kubectl get svc codesuite-demo -o wide
+    kubectl get svc code-service-demo -o wide
 
-If you copy and paste the External IP from the codesuite-demo service into a browser you should see the nginx homepage.
+If you copy and paste the External IP from the code-service-demo service into a browser you should see the nginx homepage.
 
 === Deploy the CloudFormation stack
 
@@ -46,35 +46,35 @@ Note, deploy this stack in the same region as your k8s cluster. Your cluster nod
 
 |Region | Launch Template for Kubernetes | Launch Template for Amazon EKS
 | *N. Virginia* (us-east-1)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-codesuite/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/code-service-demo-public/aws-refarch-code-service-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-code-service/aws-refarch-code-service-kubernetes.yaml]
 
 | *Ohio* (us-east-2)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/code-service-demo-public/aws-refarch-code-service-kubernetes.yaml]
 a|
 
 | *Oregon* (us-west-2)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-codesuite/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/code-service-demo-public/aws-refarch-code-service-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-code-service/aws-refarch-code-service-kubernetes.yaml]
 
 | *Ireland* (eu-west-1)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-codesuite/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/code-service-demo-public/aws-refarch-code-service-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3-us-west-2.amazonaws.com/aws-eks-code-service/aws-refarch-code-service-kubernetes.yaml]
 
 | *Frankfurt* (eu-central-1)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/code-service-demo-public/aws-refarch-code-service-kubernetes.yaml]
 a|
 
 | *Singapore* (ap-southeast-1)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/code-service-demo-public/aws-refarch-code-service-kubernetes.yaml]
 a|
 
 | *Sydney* (ap-southeast-2)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/code-service-demo-public/aws-refarch-code-service-kubernetes.yaml]
 a|
 
 | *Tokyo* (ap-northeast-1)
-a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/codesuite-demo-public/aws-refarch-codesuite-kubernetes.yaml]
+a| image::./deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stacks/new?stackName=Codesuite-Demo&templateURL=https://s3.amazonaws.com/code-service-demo-public/aws-refarch-code-service-kubernetes.yaml]
 a|
 
 |===
@@ -120,17 +120,17 @@ Check the outputs page for your CloudFormation stack:
 
     git clone <name_of_your_codecommit_repository>
 
-This creates a directory named `codesuite-demo` in your current directory.
+This creates a directory named `code-service-demo` in your current directory.
 
-Copy contents from aws-kube-codesuite/sample-app to this repository folder.
+Copy contents from aws-kube-code-service/sample-app to this repository folder.
 
-    cp aws-kube-codesuite/sample-app/* codesuite-demo/
+    cp aws-kube-code-service/sample-app/* code-service-demo/
 
-Make a change to the `codesuite-demo/hello.py` file and then change into that directory `cd codesuite-demo`
+Make a change to the `code-service-demo/hello.py` file and then change into that directory `cd code-service-demo`
 
 Add, commit and push:
 
-    git add . && git commit -m "test CodeSuite" && git push origin master
+    git add . && git commit -m "test Code Service" && git push origin master
 
 To view the pipeline in the AWS console go to the outputs tab for the pipeline cloudformation template and click on the Pipeline URL link:
 
@@ -142,9 +142,9 @@ image::pipeline.png[pipeline]
 
 Once the final Lambda stage is complete you should be able to see the new deployment exposed through the same service load balancer.
 
-    kubectl get svc codesuite-demo -o wide
+    kubectl get svc code-service-demo -o wide
 
-Now if you copy and paste the External IP from the codesuite-demo service into a browser you should see the flask page reflecting the changes you applied.
+Now if you copy and paste the External IP from the code-service-demo service into a browser you should see the flask page reflecting the changes you applied.
 
 === Cleaning up the example resources
 

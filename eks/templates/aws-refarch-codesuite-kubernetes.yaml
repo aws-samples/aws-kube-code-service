@@ -6,11 +6,11 @@ Parameters:
 
   Name:
     Type: String
-    Default: codesuite-demo
+    Default: code-service-demo
 
   TemplateBucket:
     Type: String
-    Default: aws-eks-codesuite
+    Default: aws-eks-code-service
 
   BranchName:
     Type: String
@@ -18,7 +18,7 @@ Parameters:
 
   DeploymentName:
     Type: String
-    Default: codesuite-demo
+    Default: code-service-demo
 
   ClusterName:
     Type: String
@@ -45,14 +45,14 @@ Resources:
   LambdaCopy:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/aws-eks-codesuite/lambda-copy.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-eks-code-service/lambda-copy.yaml
       Parameters:
         TemplateBucket: !Ref TemplateBucket
 
   Pipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/aws-eks-codesuite/deployment-pipeline.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-eks-code-service/deployment-pipeline.yaml
       Parameters:
             Name: !Ref AWS::StackName
             TemplateBucket: !Ref TemplateBucket

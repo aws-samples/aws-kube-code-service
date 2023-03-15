@@ -6,11 +6,11 @@ Parameters:
 
   Name:
     Type: String
-    Default: codesuite-demo
+    Default: code-service-demo
 
   TemplateBucket:
     Type: String
-    Default: codesuite-demo-public
+    Default: code-service-demo-public
 
   BranchName:
     Type: String
@@ -18,7 +18,7 @@ Parameters:
 
   DeploymentName:
     Type: String
-    Default: codesuite-demo
+    Default: code-service-demo
 
   CA:
     Type: String
@@ -66,14 +66,14 @@ Resources:
   LambdaCopy:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/codesuite-demo-public/lambda-copy.yaml
+      TemplateURL: https://s3.amazonaws.com/code-service-demo-public/lambda-copy.yaml
       Parameters:
         TemplateBucket: !Ref TemplateBucket
 
   SSMInject:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/codesuite-demo-public/ssm-inject.yaml
+      TemplateURL: https://s3.amazonaws.com/code-service-demo-public/ssm-inject.yaml
       Parameters:
         CA: !Ref CA
         ClientCert: !Ref ClientCert
@@ -82,7 +82,7 @@ Resources:
   Pipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/codesuite-demo-public/deployment-pipeline.yaml
+      TemplateURL: https://s3.amazonaws.com/code-service-demo-public/deployment-pipeline.yaml
       Parameters:
             Name: !Ref AWS::StackName
             TemplateBucket: !Ref TemplateBucket

@@ -4,11 +4,11 @@ Parameters:
 
   Name:
     Type: String
-    Default: codesuite-demo
+    Default: code-service-demo
 
   TemplateBucket:
     Type: String
-    Default: aws-eks-codesuite
+    Default: aws-eks-code-service
 
   BranchName:
     Type: String
@@ -16,7 +16,7 @@ Parameters:
 
   DeploymentName:
     Type: String
-    Default: codesuite-demo
+    Default: code-service-demo
 
   ClusterName:
     Type: String
